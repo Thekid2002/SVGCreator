@@ -9,7 +9,7 @@ public class SvgDocumentTest
     {
         var document = new SvgDocument().SetWidth(100)
             .SetHeight(100)
-            .AddCircle(50, 50, 40, System.Drawing.Color.Red, System.Drawing.Color.Black, 2)
+            .AddCircle((50, 50), 40, System.Drawing.Color.Red, System.Drawing.Color.Black, 2)
             .ToString();
         
         var expected = @"<svg width=""100"" height=""100"" xmlns=""http://www.w3.org/2000/svg"">

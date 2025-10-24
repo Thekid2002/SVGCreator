@@ -2,27 +2,19 @@ using System.Drawing;
 
 namespace SVGCreator;
 
-public class Line : Shape
+public class Line((int sx, int sy) start, (int ex, int ey) end, Color? strokeColor, int? strokeWidth) : Shape
 {
-    public Point Start { get; set; }
-    public Point End { get; set; }
-    public Color StrokeColor { get; set; }
-    public int StrokeWidth { get; set; }
-
-    public Line(Point start, Point end, Color strokeColor, int strokeWidth)
-    {
-        this.Start = start;
-        this.End = end;
-        this.StrokeColor = strokeColor;
-        this.StrokeWidth = strokeWidth;
-    }
+    private (int x, int y) Start { get; } = start;
+    private (int x, int y) End { get; } = end;
+    private Color StrokeColor { get; set; } = strokeColor ?? Color.Black;
+    private int StrokeWidth { get; set; } = strokeWidth ?? 1;
 
     public string ToSvgString(Point? origin)
     {
         if (origin == null)
         {
-            return $@"<line x1=""{this.Start.X}"" y1=""{this.Start.Y}"" x2=""{this.End.X}"" y2=""{this.End.Y}"" stroke=""{this.StrokeColor.Name}"" stroke-width=""{this.StrokeWidth}"" />";
+            return $@"<line x1=""{Start.x}"" y1=""{Start.y}"" x2=""{End.x}"" y2=""{End.y}"" stroke=""{this.StrokeColor.Name}"" stroke-width=""{this.StrokeWidth}"" />";
         }
-        return $@"<line x1=""{origin.X + this.Start.X}"" y1=""{origin.Y + this.Start.Y}"" x2=""{origin.X + this.End.X}"" y2=""{origin.Y + this.End.Y}"" stroke=""{this.StrokeColor.Name}"" stroke-width=""{this.StrokeWidth}"" />";
+        return $@"<line x1=""{origin.X + Start.x}"" y1=""{origin.Y + Start.y}"" x2=""{origin.X + End.x}"" y2=""{origin.Y + End.y}"" stroke=""{this.StrokeColor.Name}"" stroke-width=""{StrokeWidth}"" />";
     }
 }

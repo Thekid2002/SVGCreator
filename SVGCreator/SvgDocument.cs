@@ -5,7 +5,6 @@ namespace SVGCreator;
 public class SvgDocument(): ISvgDocument
 {
     private int Width { get; set; }
-
     private int Height { get; set; }
 
     private List<Shape> Shapes { get; set; } = new();
@@ -22,13 +21,25 @@ public class SvgDocument(): ISvgDocument
         return this;
     }
 
-    public SvgDocument AddCircle(int cx, int cy, int radius, Color? fillColor, Color? strokeColor, int? strokeWidth)
+    public SvgDocument AddCircle((int x, int y) center, int radius, Color? fillColor, Color? strokeColor, int? strokeWidth)
     {
-        Shapes.Add(new Circle(cx, cy, radius, fillColor, strokeColor, strokeWidth));
+        Shapes.Add(new Circle(center.x, center.y, radius, fillColor, strokeColor, strokeWidth));
         return this;
     }
-    
-    
+
+    public SvgDocument AddLine((int x, int y) start, (int x, int y) end, Color strokeColor, int strokeWidth)
+    {
+        Shapes.Add(new Line(start, end, strokeColor, strokeWidth));
+        return this;
+    }
+
+    public SvgDocument AddText(string content, (int x, int y) topLeft, int fontSize, string fontFamily, Color? fillColor,
+        Color? strokeColor, int? strokeWidth)
+    {
+        throw new NotImplementedException();
+    }
+
+
     public override string ToString()
     {
         return GenerateSVGString(Shapes);
