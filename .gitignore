@@ -2,3 +2,7 @@
 /.idea
 /.vs
 /bin
+/SVGCreatorTest/bin
+/SVGCreatorTest/obj
+/SVGCreator/obj
+/SVGCreator/bin
