@@ -5,6 +5,7 @@ on:
     tags:
       - 'v*.*.*' # Publish only on version tags (recommended)
 
+
 jobs:
   build:
     name: Build and Publish
