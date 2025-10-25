@@ -2,9 +2,8 @@ name: Publish NuGet Package
 
 on:
   push:
-    tags:
-      - 'v*.*.*' # Publish only on version tags (recommended)
-
+    branches:
+      - main  # only run on pushes to main
 
 jobs:
   build:
@@ -37,4 +36,6 @@ jobs:
 
       - name: Publish to NuGet (Trusted Publishing)
         uses: NuGet/setup-nuget@v2
-      - run: dotnet nuget push "./artifacts/*.nupkg" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Push package to NuGet.org
+        run: dotnet nuget push "./artifacts/*.nupkg" --source https://api.nuget.org/v3/index.json --skip-duplicate
