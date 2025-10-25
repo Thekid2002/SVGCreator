@@ -24,6 +24,9 @@ jobs:
 
       - name: Copy README.md into project folder
         run: cp README.md SVGCreator/README.md
+        
+      - name: Make sure project folder exists
+        run: mkdir -p SVGCreator/SVGCreator
 
       - name: Copy README.md into project folder again
         run: cp README.md SVGCreator/SVGCreator/README.md
