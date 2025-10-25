@@ -26,6 +26,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Copy README.md into project folder
+        run: cp README.md SVGCreator/SVGCreator/README.md
         run: cp README.md SVGCreator/README.md
 
       - name: Pack NuGet package
