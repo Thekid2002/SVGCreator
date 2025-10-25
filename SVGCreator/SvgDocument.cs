@@ -36,7 +36,8 @@ public class SvgDocument(): ISvgDocument
     public SvgDocument AddText(string content, (int x, int y) topLeft, int fontSize, string fontFamily, Color? fillColor,
         Color? strokeColor, int? strokeWidth)
     {
-        throw new NotImplementedException();
+        Shapes.Add(new Text(content, topLeft, fontSize, fontFamily, fillColor, strokeColor, strokeWidth));
+        return this;
     }
 
 
