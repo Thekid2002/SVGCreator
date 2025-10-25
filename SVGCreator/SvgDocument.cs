@@ -33,10 +33,10 @@ public class SvgDocument(): ISvgDocument
         return this;
     }
 
-    public SvgDocument AddText(string content, (int x, int y) topLeft, int fontSize, string fontFamily, Color? fillColor,
+    public SvgDocument AddText(string content, (int x, int y) centrum, int fontSize, string fontFamily, Color? fillColor,
         Color? strokeColor, int? strokeWidth)
     {
-        Shapes.Add(new Text(content, topLeft, fontSize, fontFamily, fillColor, strokeColor, strokeWidth));
+        Shapes.Add(new Text(content, centrum, fontSize, fontFamily, fillColor, strokeColor, strokeWidth));
         return this;
     }
 

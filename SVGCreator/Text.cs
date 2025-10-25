@@ -4,7 +4,7 @@ namespace SVGCreator;
 
 public class Text(
     string content,
-    (int x, int y) topLeft,
+    (int x, int y) centrum,
     int fontSize,
     string fontFamily,
     Color? fillColor,
@@ -13,7 +13,7 @@ public class Text(
     : Shape
 {
     private string Content { get; set; } = content;
-    private (int x, int y) TopLeft { get; set; } = topLeft;
+    private (int x, int y) Centrum { get; set; } = centrum;
     private int FontSize { get; set; } = fontSize;
     private string FontFamily { get; set; } = fontFamily;
     private Color? FillColor { get; set; } = fillColor;
@@ -24,8 +24,8 @@ public class Text(
     {
         if (origin == null)
         {
-            return $@"<text x=""{this.TopLeft.x}"" y=""{this.TopLeft.y}"" font-size=""{this.FontSize}"" font-family=""{this.FontFamily}"" fill=""{this.FillColor?.Name}"" stroke=""{this.StrokeColor?.Name}"" stroke-width=""{this.StrokeWidth}"">{this.Content}</text>";
+            return $@"<text x=""{Centrum.x}"" y=""{Centrum.y}"" font-size=""{FontSize}"" font-family=""{FontFamily}"" fill=""{FillColor?.Name}"" stroke=""{StrokeColor?.Name}"" stroke-width=""{StrokeWidth}"" text-anchor=""middle"" dominant-baseline=""middle"">{Content}</text>";
         }
-        return $@"<text x=""{origin.X + this.TopLeft.x}"" y=""{origin.Y + this.TopLeft.y}"" font-size=""{this.FontSize}"" font-family=""{this.FontFamily}"" fill=""{this.FillColor?.Name}"" stroke=""{this.StrokeColor?.Name}"" stroke-width=""{this.StrokeWidth}"">{this.Content}</text>";
+        return $@"<text x=""{origin.X + Centrum.x}""  y=""{origin.Y + Centrum.y}"" font-size=""{FontSize}"" font-family=""{FontFamily}"" fill=""{FillColor?.Name}"" stroke=""{StrokeColor?.Name}"" stroke-width=""{StrokeWidth}"" text-anchor=""middle"" dominant-baseline=""middle"">{Content}</text>";
     }
 }
