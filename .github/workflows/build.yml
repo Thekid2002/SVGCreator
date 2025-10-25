@@ -3,15 +3,12 @@ name: Publish NuGet Package
 on:
   push:
     branches:
-      - main  # only run on pushes to main
+      - main
 
 jobs:
   build:
     name: Build and Publish
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write   # Required for trusted publishing
-      contents: read
 
     steps:
       - name: Checkout repository
@@ -34,8 +31,5 @@ jobs:
       - name: Pack NuGet package
         run: dotnet pack --configuration Release --no-build -o ./artifacts
 
-      - name: Publish to NuGet (Trusted Publishing)
-        uses: NuGet/setup-nuget@v2
-
-      - name: Push package to NuGet.org
-        run: dotnet nuget push "./artifacts/*.nupkg" --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Publish to NuGet
+        run: dotnet nuget push "./artifacts/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
