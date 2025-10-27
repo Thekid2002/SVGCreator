@@ -2,19 +2,36 @@ using System.Drawing;
 
 namespace SVGCreator;
 
-public class Line((int sx, int sy) start, (int ex, int ey) end, Color? strokeColor, int? strokeWidth) : Shape
+public class Line((int x, int y) start, (int x, int y) end, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : Shape
 {
     private (int x, int y) Start { get; } = start;
     private (int x, int y) End { get; } = end;
-    private Color StrokeColor { get; set; } = strokeColor ?? Color.Black;
-    private int StrokeWidth { get; set; } = strokeWidth ?? 1;
+    private Color? StrokeColor { get; } = strokeColor;
+    private int? StrokeWidth { get; } = strokeWidth;
+    private string? AdditionalAttributesString { get; } = additionalAttributesString;
 
     public string ToSvgString(Point? origin)
     {
-        if (origin == null)
+        int ox = origin?.X ?? 0;
+        int oy = origin?.Y ?? 0;
+
+        var attrs = new List<string>
         {
-            return $@"<line x1=""{Start.x}"" y1=""{Start.y}"" x2=""{End.x}"" y2=""{End.y}"" stroke=""{this.StrokeColor.Name}"" stroke-width=""{this.StrokeWidth}"" />";
-        }
-        return $@"<line x1=""{origin.X + Start.x}"" y1=""{origin.Y + Start.y}"" x2=""{origin.X + End.x}"" y2=""{origin.Y + End.y}"" stroke=""{this.StrokeColor.Name}"" stroke-width=""{StrokeWidth}"" />";
+            $"x1=\"{ox + Start.x}\"",
+            $"y1=\"{oy + Start.y}\"",
+            $"x2=\"{ox + End.x}\"",
+            $"y2=\"{oy + End.y}\""
+        };
+
+        if (StrokeColor.HasValue)
+            attrs.Add($"stroke=\"{StrokeColor.Value.Name}\"");
+
+        if (StrokeWidth.HasValue)
+            attrs.Add($"stroke-width=\"{StrokeWidth.Value}\"");
+
+        if (!string.IsNullOrEmpty(AdditionalAttributesString))
+            attrs.Add(AdditionalAttributesString!);
+
+        return $"<line {string.Join(" ", attrs)} />";
     }
 }

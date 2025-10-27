@@ -6,26 +6,58 @@ public class Text(
     string content,
     (int x, int y) centrum,
     int fontSize,
-    string fontFamily,
+    string? fontFamily,
+    int? rotation,
     Color? fillColor,
     Color? strokeColor,
-    int? strokeWidth)
-    : Shape
+    int? strokeWidth,
+    string? additionalAttributesString = null) : Shape
 {
-    private string Content { get; set; } = content;
-    private (int x, int y) Centrum { get; set; } = centrum;
-    private int FontSize { get; set; } = fontSize;
-    private string FontFamily { get; set; } = fontFamily;
-    private Color? FillColor { get; set; } = fillColor;
-    private Color? StrokeColor { get; set; } = strokeColor;
-    private int? StrokeWidth { get; set; } = strokeWidth;
+    private string Content { get; } = content;
+    private (int x, int y) Centrum { get; } = centrum;
+    private int FontSize { get; } = fontSize;
+    private string? FontFamily { get; } = fontFamily;
+    private int? Rotation { get; } = rotation;
+    private Color? FillColor { get; } = fillColor;
+    private Color? StrokeColor { get; } = strokeColor;
+    private int? StrokeWidth { get; } = strokeWidth;
+    private string? AdditionalAttributesString { get; } = additionalAttributesString;
 
     public string ToSvgString(Point? origin)
     {
-        if (origin == null)
+        int ox = origin?.X ?? 0;
+        int oy = origin?.Y ?? 0;
+
+        int x = ox + Centrum.x;
+        int y = oy + Centrum.y;
+
+        var attrs = new List<string>
         {
-            return $@"<text x=""{Centrum.x}"" y=""{Centrum.y}"" font-size=""{FontSize}"" font-family=""{FontFamily}"" fill=""{FillColor?.Name}"" stroke=""{StrokeColor?.Name}"" stroke-width=""{StrokeWidth}"" text-anchor=""middle"" dominant-baseline=""middle"">{Content}</text>";
-        }
-        return $@"<text x=""{origin.X + Centrum.x}""  y=""{origin.Y + Centrum.y}"" font-size=""{FontSize}"" font-family=""{FontFamily}"" fill=""{FillColor?.Name}"" stroke=""{StrokeColor?.Name}"" stroke-width=""{StrokeWidth}"" text-anchor=""middle"" dominant-baseline=""middle"">{Content}</text>";
+            $"x=\"{x}\"",
+            $"y=\"{y}\"",
+            $"font-size=\"{FontSize}\"",
+            "text-anchor=\"middle\"",
+            "dominant-baseline=\"middle\""
+        };
+        
+        if (!string.IsNullOrEmpty(FontFamily))
+            attrs.Add($"font-family=\"{FontFamily}\"");
+        
+        if (Rotation.HasValue)
+            attrs.Add($"transform=\"rotate({Rotation.Value} {x} {y})\"");
+
+        if (FillColor.HasValue)
+            attrs.Add($"fill=\"{FillColor.Value.Name}\"");
+
+        if (StrokeColor.HasValue)
+            attrs.Add($"stroke=\"{StrokeColor.Value.Name}\"");
+
+        if (StrokeWidth.HasValue)
+            attrs.Add($"stroke-width=\"{StrokeWidth.Value}\"");
+
+        if (!string.IsNullOrEmpty(AdditionalAttributesString))
+            attrs.Add(AdditionalAttributesString!);
+
+        return $@"<text {string.Join(" ", attrs)}>{Content}</text>";
     }
 }

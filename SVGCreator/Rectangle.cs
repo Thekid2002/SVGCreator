@@ -2,33 +2,46 @@ using System.Drawing;
 
 namespace SVGCreator;
 
-public class Rectangle : Shape
+public class Rectangle((int x, int y) centrum, int width, int height, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : Shape
 {
-    public Point TopLeft { get; set; }
-    public int Width { get; set; }
-    public int Height { get; set; }
-    public Color FillColor { get; set; }
-    public Color StrokeColor { get; set; }
-    public int StrokeWidth { get; set; }
-
-    public Rectangle(Point topLeft, int width, int height, Color fillColor, Color strokeColor, int strokeWidth)
-    {
-        this.TopLeft = topLeft;
-        this.Width = width;
-        this.Height = height;
-        this.FillColor = fillColor;
-        this.StrokeColor = strokeColor;
-        this.StrokeWidth = strokeWidth;
-    }
+    private (int x, int y) Centrum { get; } = centrum;
+    private int Width { get; } = width;
+    private int Height { get; } = height;
+    private Color? FillColor { get; } = fillColor;
+    private Color? StrokeColor { get; } = strokeColor;
+    private int? StrokeWidth { get; } = strokeWidth;
+    private string? AdditionalAttributesString { get; } = additionalAttributesString;
 
     public string ToSvgString(Point? origin)
     {
-        if (origin == null)
+        int ox = origin?.X ?? 0;
+        int oy = origin?.Y ?? 0;
+
+        int halfW = Width / 2;
+        int halfH = Height / 2;
+        int x = ox + Centrum.x - halfW;
+        int y = oy + Centrum.y - halfH;
+
+        var attrs = new List<string>
         {
-            return $@"<rect x=""{this.TopLeft.X}"" y=""{this.TopLeft.Y}"" width=""{this.Width}"" height=""{this.Height}"" stroke=""{this.StrokeColor.Name}"" stroke-width=""{this.StrokeWidth}"" fill=""{this.FillColor.Name}"" />";
-        }
-        return $@"<rect x=""{origin.X + this.TopLeft.X}"" y=""{origin.Y + this.TopLeft.Y}"" width=""{this.Width}"" height=""{this.Height}"" stroke=""{this.StrokeColor.Name}"" stroke-width=""{this.StrokeWidth}"" fill=""{this.FillColor.Name}"" />";
+            $"x=\"{x}\"",
+            $"y=\"{y}\"",
+            $"width=\"{Width}\"",
+            $"height=\"{Height}\""
+        };
 
+        if (StrokeColor.HasValue)
+            attrs.Add($"stroke=\"{StrokeColor.Value.Name}\"");
+
+        if (StrokeWidth.HasValue)
+            attrs.Add($"stroke-width=\"{StrokeWidth.Value}\"");
+
+        if (FillColor.HasValue)
+            attrs.Add($"fill=\"{FillColor.Value.Name}\"");
+
+        if (!string.IsNullOrEmpty(AdditionalAttributesString))
+            attrs.Add(AdditionalAttributesString!);
+
+        return $"<rect {string.Join(" ", attrs)} />";
     }
-
 }

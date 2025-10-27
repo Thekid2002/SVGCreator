@@ -53,10 +53,11 @@ public class SvgDocument: ISvgDocument
     /// <param name="fillColor">Fill color of the circle (optional).</param>
     /// <param name="strokeColor">Stroke color of the circle (optional).</param>
     /// <param name="strokeWidth">Stroke width (optional).</param>
+    /// <param name="additionalAttributesString">Additional SVG attributes as a string (optional).</param>
     /// <returns>The current SvgDocument for chaining.</returns>
-    public SvgDocument AddCircle((int x, int y) center, int radius, Color? fillColor, Color? strokeColor, int? strokeWidth)
+    public SvgDocument AddCircle((int x, int y) center, int radius, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)
     {
-        Shapes.Add(new Circle(center.x, center.y, radius, fillColor, strokeColor, strokeWidth));
+        Shapes.Add(new Circle(center.x, center.y, radius, fillColor, strokeColor, strokeWidth, additionalAttributesString));
         return this;
     }
 
@@ -67,10 +68,11 @@ public class SvgDocument: ISvgDocument
     /// <param name="end">Ending point of the line.</param>
     /// <param name="strokeColor">Color of the line.</param>
     /// <param name="strokeWidth">Width of the line.</param>
+    /// <param name="additionalAttributesString">Additional SVG attributes as a string (optional).</param>
     /// <returns>The current SvgDocument for chaining.</returns>
-    public SvgDocument AddLine((int x, int y) start, (int x, int y) end, Color strokeColor, int strokeWidth)
+    public SvgDocument AddLine((int x, int y) start, (int x, int y) end, Color strokeColor, int strokeWidth, string ? additionalAttributesString = null)
     {
-        Shapes.Add(new Line(start, end, strokeColor, strokeWidth));
+        Shapes.Add(new Line(start, end, strokeColor, strokeWidth, additionalAttributesString));
         return this;
     }
     
@@ -81,10 +83,11 @@ public class SvgDocument: ISvgDocument
     /// <param name="points">List of points defining the curve.</param>
     /// <param name="strokeColor">Stroke color of the curve.</param>
     /// <param name="strokeWidth">Stroke width of the curve.</param>
+    /// <param name="additionalAttributesString">Additional SVG attributes as a string (optional).</param>
     /// <returns>The current SvgDocument for chaining.</returns>
-    public SvgDocument AddCurvedLine(List<(int, int)> points, Color strokeColor, int strokeWidth)
+    public SvgDocument AddCurvedLine(List<(int, int)> points, Color strokeColor, int strokeWidth, string? additionalAttributesString = null)
     {
-        Shapes.Add(new CurvedLine(points, strokeColor, strokeWidth));
+        Shapes.Add(new CurvedLine(points, strokeColor, strokeWidth, additionalAttributesString));
         return this;
     }
 
@@ -94,15 +97,52 @@ public class SvgDocument: ISvgDocument
     /// <param name="content">Text content.</param>
     /// <param name="centrum">Position of the text (x, y).</param>
     /// <param name="fontSize">Font size.</param>
-    /// <param name="fontFamily">Font family name.</param>
+    /// <param name="fontFamily">Font family name (optional).</param>
+    /// <param name="rotation">Rotation angle in degrees (optional).</param>
     /// <param name="fillColor">Text fill color (optional).</param>
     /// <param name="strokeColor">Text stroke color (optional).</param>
     /// <param name="strokeWidth">Stroke width (optional).</param>
+    /// <param name="additionalAttributesString">Additional SVG attributes as a string (optional).</param>
     /// <returns>The current SvgDocument for chaining.</returns>
-    public SvgDocument AddText(string content, (int x, int y) centrum, int fontSize, string fontFamily, Color? fillColor,
-        Color? strokeColor, int? strokeWidth)
+    public SvgDocument AddText(string content, (int x, int y) centrum, int fontSize, string? fontFamily, int? rotation, Color? fillColor,
+        Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)
     {
-        Shapes.Add(new Text(content, centrum, fontSize, fontFamily, fillColor, strokeColor, strokeWidth));
+        Shapes.Add(new Text(content, centrum, fontSize, fontFamily, rotation, fillColor, strokeColor, strokeWidth, additionalAttributesString));
+        return this;
+    }
+    
+    /// <summary>
+    /// Adds a square to the SVG document.
+    /// </summary>
+    /// <param name="topLeft">Top-left corner coordinates of the square.</param>
+    /// <param name="sideLength">Length of each side of the square.</param>
+    /// <param name="fillColor">Fill color of the square (optional).</param>
+    /// <param name="strokeColor">Stroke color of the square (optional).</param>
+    /// <param name="strokeWidth">Stroke width of the square (optional).</param>
+    /// <param name="additionalAttributesString">Additional SVG attributes as a string (optional).</param>
+    /// <returns>The current SvgDocument for chaining.</returns>
+    public SvgDocument AddSquare((int x, int y) topLeft, int sideLength, Color? fillColor, Color? strokeColor,
+        int? strokeWidth, string? additionalAttributesString = null)
+    {
+        Shapes.Add(new Square((topLeft.x, topLeft.y), sideLength, fillColor, strokeColor, strokeWidth, additionalAttributesString));
+        return this;
+    }
+    
+    /// <summary>
+    /// Adds a rectangle to the SVG document.
+    /// </summary>
+    /// <param name="topLeft">Top-left corner coordinates of the rectangle.</param>
+    /// <param name="width">Width of the rectangle.</param>
+    /// <param name="height">Height of the rectangle.</param>
+    /// <param name="fillColor">Fill color of the rectangle (optional).</param>
+    /// <param name="strokeColor">Stroke color of the rectangle (optional).</param>
+    /// <param name="strokeWidth">Stroke width of the rectangle (optional).</param>
+    /// <param name="additionalAttributesString">Additional SVG attributes as a string (optional).</param>
+    /// <returns>The current SvgDocument for chaining.</returns>
+    public SvgDocument AddRectangle((int x, int y) topLeft, int width, int height, Color? fillColor, Color? strokeColor,
+        int? strokeWidth, string? additionalAttributesString = null)
+    {
+        Shapes.Add(new Rectangle((topLeft.x, topLeft.y), width, height, fillColor, strokeColor, strokeWidth, additionalAttributesString));
         return this;
     }
 
