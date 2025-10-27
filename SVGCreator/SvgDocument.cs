@@ -48,7 +48,7 @@ public class SvgDocument: ISvgDocument
     /// <summary>
     /// Adds a circle to the SVG document.
     /// </summary>
-    /// <param name="center">Tuple representing the center coordinates of the circle.</param>
+    /// <param name="center">Center coordinates of the circle.</param>
     /// <param name="radius">Radius of the circle.</param>
     /// <param name="fillColor">Fill color of the circle (optional).</param>
     /// <param name="strokeColor">Stroke color of the circle (optional).</param>
@@ -95,7 +95,7 @@ public class SvgDocument: ISvgDocument
     /// Adds text to the SVG document.
     /// </summary>
     /// <param name="content">Text content.</param>
-    /// <param name="centrum">Position of the text (x, y).</param>
+    /// <param name="center">Position of the text (x, y).</param>
     /// <param name="fontSize">Font size.</param>
     /// <param name="fontFamily">Font family name (optional).</param>
     /// <param name="rotation">Rotation angle in degrees (optional).</param>
@@ -104,34 +104,34 @@ public class SvgDocument: ISvgDocument
     /// <param name="strokeWidth">Stroke width (optional).</param>
     /// <param name="additionalAttributesString">Additional SVG attributes as a string (optional).</param>
     /// <returns>The current SvgDocument for chaining.</returns>
-    public SvgDocument AddText(string content, (int x, int y) centrum, int fontSize, string? fontFamily, int? rotation, Color? fillColor,
+    public SvgDocument AddText(string content, (int x, int y) center, int fontSize, string? fontFamily, int? rotation, Color? fillColor,
         Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)
     {
-        Shapes.Add(new Text(content, centrum, fontSize, fontFamily, rotation, fillColor, strokeColor, strokeWidth, additionalAttributesString));
+        Shapes.Add(new Text(content, center, fontSize, fontFamily, rotation, fillColor, strokeColor, strokeWidth, additionalAttributesString));
         return this;
     }
     
     /// <summary>
     /// Adds a square to the SVG document.
     /// </summary>
-    /// <param name="topLeft">Top-left corner coordinates of the square.</param>
+    /// <param name="center">Center coordinates of the square.</param>
     /// <param name="sideLength">Length of each side of the square.</param>
     /// <param name="fillColor">Fill color of the square (optional).</param>
     /// <param name="strokeColor">Stroke color of the square (optional).</param>
     /// <param name="strokeWidth">Stroke width of the square (optional).</param>
     /// <param name="additionalAttributesString">Additional SVG attributes as a string (optional).</param>
     /// <returns>The current SvgDocument for chaining.</returns>
-    public SvgDocument AddSquare((int x, int y) topLeft, int sideLength, Color? fillColor, Color? strokeColor,
+    public SvgDocument AddSquare((int x, int y) center, int sideLength, Color? fillColor, Color? strokeColor,
         int? strokeWidth, string? additionalAttributesString = null)
     {
-        Shapes.Add(new Square((topLeft.x, topLeft.y), sideLength, fillColor, strokeColor, strokeWidth, additionalAttributesString));
+        Shapes.Add(new Square((center.x, center.y), sideLength, fillColor, strokeColor, strokeWidth, additionalAttributesString));
         return this;
     }
     
     /// <summary>
     /// Adds a rectangle to the SVG document.
     /// </summary>
-    /// <param name="topLeft">Top-left corner coordinates of the rectangle.</param>
+    /// <param name="center">Center coordinates of the rectangle.</param>
     /// <param name="width">Width of the rectangle.</param>
     /// <param name="height">Height of the rectangle.</param>
     /// <param name="fillColor">Fill color of the rectangle (optional).</param>
@@ -139,10 +139,10 @@ public class SvgDocument: ISvgDocument
     /// <param name="strokeWidth">Stroke width of the rectangle (optional).</param>
     /// <param name="additionalAttributesString">Additional SVG attributes as a string (optional).</param>
     /// <returns>The current SvgDocument for chaining.</returns>
-    public SvgDocument AddRectangle((int x, int y) topLeft, int width, int height, Color? fillColor, Color? strokeColor,
+    public SvgDocument AddRectangle((int x, int y) center, int width, int height, Color? fillColor, Color? strokeColor,
         int? strokeWidth, string? additionalAttributesString = null)
     {
-        Shapes.Add(new Rectangle((topLeft.x, topLeft.y), width, height, fillColor, strokeColor, strokeWidth, additionalAttributesString));
+        Shapes.Add(new Rectangle((center.x, center.y), width, height, fillColor, strokeColor, strokeWidth, additionalAttributesString));
         return this;
     }
 

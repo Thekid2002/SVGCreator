@@ -59,8 +59,8 @@ The main interface is `ISvgDocument`, which `SvgDocument` implements.
 | `AddLine((int x, int y) start, (int x, int y) end, Color strokeColor, int strokeWidth, string? additionalAttributesString = null)`                                                                    | Adds a straight line to the SVG document. |
 | `AddCurvedLine(List<(int,int)> points, Color strokeColor, int strokeWidth, string? additionalAttributesString = null)`                                                                                | Adds a curved line defined by multiple points (polyline/path). |
 | `AddText(string content, (int x, int y) centrum, int fontSize, string? fontFamily, int? rotation, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)` | Adds text to the SVG document. |
-| `AddSquare((int x, int y) topLeft, int sideLength, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)`                                                | Adds a square to the SVG document. |
-| `AddRectangle((int x, int y) topLeft, int width, int height, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)`                                      | Adds a rectangle to the SVG document. |
+| `AddSquare((int x, int y) center, int sideLength, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)`                                                 | Adds a square to the SVG document. |
+| `AddRectangle((int x, int y) center, int width, int height, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)`                                       | Adds a rectangle to the SVG document. |
 
 ## Notes
 
