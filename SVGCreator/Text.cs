@@ -4,7 +4,7 @@ namespace SVGCreator;
 
 public class Text(
     string content,
-    (int x, int y) centrum,
+    (int x, int y) center,
     int fontSize,
     string? fontFamily,
     int? rotation,
@@ -14,7 +14,7 @@ public class Text(
     string? additionalAttributesString = null) : Shape
 {
     private string Content { get; } = content;
-    private (int x, int y) Centrum { get; } = centrum;
+    private (int x, int y) Center { get; } = center;
     private int FontSize { get; } = fontSize;
     private string? FontFamily { get; } = fontFamily;
     private int? Rotation { get; } = rotation;
@@ -28,8 +28,8 @@ public class Text(
         int ox = origin?.X ?? 0;
         int oy = origin?.Y ?? 0;
 
-        int x = ox + Centrum.x;
-        int y = oy + Centrum.y;
+        int x = ox + Center.x;
+        int y = oy + Center.y;
 
         var attrs = new List<string>
         {

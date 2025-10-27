@@ -2,9 +2,9 @@ using System.Drawing;
 
 namespace SVGCreator;
 
-public class Rectangle((int x, int y) centrum, int width, int height, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : Shape
+public class Rectangle((int x, int y) center, int width, int height, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : Shape
 {
-    private (int x, int y) Centrum { get; } = centrum;
+    private (int x, int y) Center { get; } = center;
     private int Width { get; } = width;
     private int Height { get; } = height;
     private Color? FillColor { get; } = fillColor;
@@ -19,8 +19,8 @@ public class Rectangle((int x, int y) centrum, int width, int height, Color? fil
 
         int halfW = Width / 2;
         int halfH = Height / 2;
-        int x = ox + Centrum.x - halfW;
-        int y = oy + Centrum.y - halfH;
+        int x = ox + Center.x - halfW;
+        int y = oy + Center.y - halfH;
 
         var attrs = new List<string>
         {
