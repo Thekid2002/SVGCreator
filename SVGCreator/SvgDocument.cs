@@ -21,7 +21,7 @@ public class SvgDocument: ISvgDocument
     /// <summary>
     /// List of shapes added to the SVG document.
     /// </summary>
-    private List<Shape> Shapes { get; set; } = new();
+    private List<IShape> Shapes { get; set; } = new();
     
     /// <summary>
     /// Sets the width of the SVG document.
@@ -57,7 +57,7 @@ public class SvgDocument: ISvgDocument
     /// <returns>The current SvgDocument for chaining.</returns>
     public SvgDocument AddCircle((int x, int y) center, int radius, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)
     {
-        Shapes.Add(new Circle(center.x, center.y, radius, fillColor, strokeColor, strokeWidth, additionalAttributesString));
+        Shapes.Add(new Circle(center, radius, fillColor, strokeColor, strokeWidth, additionalAttributesString));
         return this;
     }
 
@@ -145,6 +145,17 @@ public class SvgDocument: ISvgDocument
         Shapes.Add(new Rectangle((center.x, center.y), width, height, fillColor, strokeColor, strokeWidth, additionalAttributesString));
         return this;
     }
+    
+    /// <summary>
+    /// Adds a generic shape to the SVG document.
+    /// </summary>
+    /// <param name="shape">The shape to add.</param>
+    /// <returns>The current SvgDocument for chaining.</returns>
+    public SvgDocument AddShape(IShape shape)
+    {
+        Shapes.Add(shape);
+        return this;
+    }
 
     /// <summary>
     /// Generates the SVG string representing this document and all shapes.
@@ -160,13 +171,13 @@ public class SvgDocument: ISvgDocument
     /// </summary>
     /// <param name="shapes">List of shapes to include in the SVG.</param>
     /// <returns>SVG as string.</returns>
-    private string GenerateSVGString(List<Shape> shapes)
+    private string GenerateSVGString(List<IShape> shapes)
     {
         string content = $@"<svg width=""{this.Width}"" height=""{this.Height}"" xmlns=""http://www.w3.org/2000/svg"">";
 
         foreach (var shape in shapes)
         {
-            content += "    " + shape.ToSvgString(new Point(0,0)) + "\n";
+            content += "    " + shape.ToSvgString() + "\n";
         }
 
         content += "</svg>";

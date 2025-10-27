@@ -2,25 +2,21 @@ using System.Drawing;
 
 namespace SVGCreator;
 
-public class Circle(int cx, int cy, int radius, Color? fillColor, Color? strokeColor, int? strokeWidth, string?  additionalAttributesString = null) : Shape
+public class Circle((int x, int y) center, int radius, Color? fillColor, Color? strokeColor, int? strokeWidth, string?  additionalAttributesString = null) : IShape
 {
-    private int Cx { get; } = cx;
-    private int Cy { get; } = cy;
+    private (int x, int y) Center { get; } = center;
     private int Radius { get; } = radius;
     private Color? FillColor { get; } = fillColor;
     private Color? StrokeColor { get; } = strokeColor;
     private int? StrokeWidth { get; } = strokeWidth;
     private string? AdditionalAttributesString { get; } = additionalAttributesString;
     
-    public string ToSvgString(Point? origin)
+    public string ToSvgString()
     {
-        int cx = (origin?.X ?? 0) + Cx;
-        int cy = (origin?.Y ?? 0) + Cy;
-
         var attrs = new List<string>
         {
-            $"cx=\"{cx}\"",
-            $"cy=\"{cy}\"",
+            $"cx=\"{Center.x}\"",
+            $"cy=\"{Center.y}\"",
             $"r=\"{Radius}\""
         };
 

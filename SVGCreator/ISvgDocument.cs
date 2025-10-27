@@ -12,5 +12,6 @@ public interface ISvgDocument
     SvgDocument AddText(string content, (int x, int y) center, int fontSize, string? fontFamily, int? rotation, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null);
     SvgDocument AddSquare((int x, int y) center, int sideLength, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null);
     SvgDocument AddRectangle((int x, int y) center, int width, int height, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null);
+    SvgDocument AddShape(IShape shape);
     string ToString();
 }

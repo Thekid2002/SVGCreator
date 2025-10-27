@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace SVGCreator;
 
-public class Line((int x, int y) start, (int x, int y) end, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : Shape
+public class Line((int x, int y) start, (int x, int y) end, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : IShape
 {
     private (int x, int y) Start { get; } = start;
     private (int x, int y) End { get; } = end;
@@ -10,17 +10,14 @@ public class Line((int x, int y) start, (int x, int y) end, Color? strokeColor, 
     private int? StrokeWidth { get; } = strokeWidth;
     private string? AdditionalAttributesString { get; } = additionalAttributesString;
 
-    public string ToSvgString(Point? origin)
+    public string ToSvgString()
     {
-        int ox = origin?.X ?? 0;
-        int oy = origin?.Y ?? 0;
-
         var attrs = new List<string>
         {
-            $"x1=\"{ox + Start.x}\"",
-            $"y1=\"{oy + Start.y}\"",
-            $"x2=\"{ox + End.x}\"",
-            $"y2=\"{oy + End.y}\""
+            $"x1=\"{Start.x}\"",
+            $"y1=\"{Start.y}\"",
+            $"x2=\"{End.x}\"",
+            $"y2=\"{End.y}\""
         };
 
         if (StrokeColor.HasValue)

@@ -11,7 +11,7 @@ public class Text(
     Color? fillColor,
     Color? strokeColor,
     int? strokeWidth,
-    string? additionalAttributesString = null) : Shape
+    string? additionalAttributesString = null) : IShape
 {
     private string Content { get; } = content;
     private (int x, int y) Center { get; } = center;
@@ -23,18 +23,12 @@ public class Text(
     private int? StrokeWidth { get; } = strokeWidth;
     private string? AdditionalAttributesString { get; } = additionalAttributesString;
 
-    public string ToSvgString(Point? origin)
+    public string ToSvgString()
     {
-        int ox = origin?.X ?? 0;
-        int oy = origin?.Y ?? 0;
-
-        int x = ox + Center.x;
-        int y = oy + Center.y;
-
         var attrs = new List<string>
         {
-            $"x=\"{x}\"",
-            $"y=\"{y}\"",
+            $"x=\"{Center.x}\"",
+            $"y=\"{Center.y}\"",
             $"font-size=\"{FontSize}\"",
             "text-anchor=\"middle\"",
             "dominant-baseline=\"middle\""
@@ -44,7 +38,7 @@ public class Text(
             attrs.Add($"font-family=\"{FontFamily}\"");
         
         if (Rotation.HasValue)
-            attrs.Add($"transform=\"rotate({Rotation.Value} {x} {y})\"");
+            attrs.Add($"transform=\"rotate({Rotation.Value} {Center.x} {Center.y})\"");
 
         if (FillColor.HasValue)
             attrs.Add($"fill=\"{FillColor.Value.Name}\"");

@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace SVGCreator;
 
-public class Rectangle((int x, int y) center, int width, int height, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : Shape
+public class Rectangle((int x, int y) center, int width, int height, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : IShape
 {
     private (int x, int y) Center { get; } = center;
     private int Width { get; } = width;
@@ -12,15 +12,12 @@ public class Rectangle((int x, int y) center, int width, int height, Color? fill
     private int? StrokeWidth { get; } = strokeWidth;
     private string? AdditionalAttributesString { get; } = additionalAttributesString;
 
-    public string ToSvgString(Point? origin)
+    public string ToSvgString()
     {
-        int ox = origin?.X ?? 0;
-        int oy = origin?.Y ?? 0;
-
         int halfW = Width / 2;
         int halfH = Height / 2;
-        int x = ox + Center.x - halfW;
-        int y = oy + Center.y - halfH;
+        int x = Center.x - halfW;
+        int y = Center.y - halfH;
 
         var attrs = new List<string>
         {

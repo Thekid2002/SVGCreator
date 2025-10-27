@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace SVGCreator;
 
-public class Square((int x, int y) center, int sideLength, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : Shape
+public class Square((int x, int y) center, int sideLength, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null) : IShape
 {
     private (int x, int y) Center { get; } = center;
     private int SideLength { get; } = sideLength;
@@ -11,14 +11,11 @@ public class Square((int x, int y) center, int sideLength, Color? fillColor, Col
     private int? StrokeWidth { get; } = strokeWidth;
     private string? AdditionalAttributesString { get; } = additionalAttributesString;
 
-    public string ToSvgString(Point? origin)
+    public string ToSvgString()
     {
-        int ox = origin?.X ?? 0;
-        int oy = origin?.Y ?? 0;
-
         int half = SideLength / 2;
-        int x = ox + Center.x - half;
-        int y = oy + Center.y - half;
+        int x = Center.x - half;
+        int y = Center.y - half;
 
         var attrs = new List<string>
         {

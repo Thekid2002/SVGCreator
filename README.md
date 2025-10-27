@@ -5,9 +5,9 @@
 ## Features
 
 - Create SVG documents of any width and height.
-- Add **circles**, **lines**, **curved lines**, and **text**.
-- Fluent interface for chaining multiple operations.
-- XML documentation inherited from the interface for clean IntelliSense support.
+- Add **circles**, **lines**, **curved lines**, **text** and much more.
+- Use the builder pattern for easy and readable SVG creation.
+- Supports colors, stroke widths, fonts, and positioning.
 - Easily extendable with new shapes.
 
 ## Github
@@ -49,6 +49,7 @@ class Program
 ## API Overview
 
 The main interface is `ISvgDocument`, which `SvgDocument` implements.
+The inteface `IShape` can be implemented to create custom shapes and then added to the SVG document.
 
 
 ## Shape Methods
@@ -61,6 +62,7 @@ The main interface is `ISvgDocument`, which `SvgDocument` implements.
 | `AddText(string content, (int x, int y) center, int fontSize, string? fontFamily, int? rotation, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)` | Adds text to the SVG document. |
 | `AddSquare((int x, int y) center, int sideLength, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)`                                                | Adds a square to the SVG document. |
 | `AddRectangle((int x, int y) center, int width, int height, Color? fillColor, Color? strokeColor, int? strokeWidth, string? additionalAttributesString = null)`                                      | Adds a rectangle to the SVG document. |
+| `AddShape(IShape shape)`                                                                                                                                                                             | Adds a custom shape implementing the `IShape` interface. |
 
 ## Notes
 
